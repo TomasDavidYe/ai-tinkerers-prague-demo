@@ -1,6 +1,6 @@
 from backend.src.db.DBContext import DBContext
 
-def load_trend_data(name):
+def load_trend_data():
 
     # Reach out to me at tom@perseuss.xyz
     # if you want access to the full trend database
@@ -26,5 +26,5 @@ def load_trend_data(name):
 
 
 if __name__ == '__main__':
-    load_trend_data('PyCharm')
+    load_trend_data()
 
