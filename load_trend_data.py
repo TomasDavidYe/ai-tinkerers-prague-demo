@@ -21,7 +21,7 @@ def load_trend_data(name):
     order by term asc, date asc
     ''')
 
-    terms_df.to_csv('./raw_term_sample.txt', index=False)
+    terms_df.to_csv('./data/raw_term_sample.csv', index=False)
 
 
 
