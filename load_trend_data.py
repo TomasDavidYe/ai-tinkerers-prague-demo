@@ -2,11 +2,15 @@ from backend.src.db.DBContext import DBContext
 
 def load_trend_data(name):
 
-    # Reach out to me at tom@perseuss.xyz if you want access to the full trend database
+    # Reach out to me at tom@perseuss.xyz
+    # if you want access to the full trend database
     db = DBContext.getTrendDatabaseSql()
 
-    raw_terms_df = db.load_select_query_to_df('''
-    select t.*
+    terms_df = db.load_select_query_to_df('''
+    select t.term,
+           t.date,
+           t.rank,
+           t.estimated_search_volume
     from weekly_time_range_stats_raw as s
         join terms_time_series_weekly as t
              on s.term = t.term
@@ -17,7 +21,7 @@ def load_trend_data(name):
     order by term asc, date asc
     ''')
 
-    raw_terms_df.to_csv('./raw_term_sample.txt', index=False)
+    terms_df.to_csv('./raw_term_sample.txt', index=False)
 
 
 
