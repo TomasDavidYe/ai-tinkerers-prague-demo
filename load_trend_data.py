@@ -1,7 +1,7 @@
 from backend.src.db.DBContext import DBContext
 
-def load_trend_data():
 
+def load_trend_data():
     # Reach out to me at tom@perseuss.xyz
     # if you want access to the full trend database
     db = DBContext.getTrendDatabaseSql()
@@ -23,8 +23,25 @@ def load_trend_data():
 
     terms_df.to_csv('./data/raw_term_sample.csv', index=False)
 
+    term_set = set(terms_df['term'])
+    term_set = {term.replace("'", "''") for term in term_set}
+    term_set_sql_string = f"""('{"','".join(term_set)}')"""
+
+    term_details_df = db.load_select_query_to_df(f'''
+        select term,
+               asin,
+               title,
+               category,
+               subcategory,
+               brand,
+               list_price_amount,
+               list_price_currency,
+               image_url
+        from terms_to_asin_details
+        where term in {term_set_sql_string};
+    ''')
+    term_details_df.to_csv('./asin_details.csv', index=False)
 
 
 if __name__ == '__main__':
     load_trend_data()
-
